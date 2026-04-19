@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import axios from 'axios'
 
-const API = 'http://localhost:8000'
-const WS_URL = 'ws://localhost:8000/ws/live-status'
+const API = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const WS_URL = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws/live-status'
 
 const EVENT_ICONS = {
   started: '🚀',
