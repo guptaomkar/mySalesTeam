@@ -30,6 +30,9 @@ import pandas as pd
 
 app = FastAPI(title="mySalesTeam API", version="2.0")
 
+# Store strong references to background tasks so they don't get garbage collected
+background_tasks_set = set()
+
 # ========================
 # CORS — Allow React frontend
 # ========================
@@ -355,7 +358,9 @@ async def start_campaign(lead_id: Optional[str] = None):
     If lead_id is provided, runs for that specific lead only.
     Otherwise processes all pending leads.
     """
-    asyncio.create_task(run_campaign(lead_id=lead_id))
+    task = asyncio.create_task(run_campaign(lead_id=lead_id))
+    background_tasks_set.add(task)
+    task.add_done_callback(background_tasks_set.discard)
     msg = f"Campaign started for lead {lead_id}" if lead_id else "Campaign started for all pending leads"
     return {"status": "started", "message": msg}
 
@@ -419,7 +424,9 @@ async def delete_followup(followup_id: str):
 @app.post("/start-followups")
 async def start_followups():
     """Manually start a single cycle of the follow-ups."""
-    asyncio.create_task(run_followups_once())
+    task = asyncio.create_task(run_followups_once())
+    background_tasks_set.add(task)
+    task.add_done_callback(background_tasks_set.discard)
     return {"status": "started", "message": "Follow-ups manual run triggered."}
 
 
