@@ -104,6 +104,8 @@ def serialize_doc(doc: dict) -> dict:
 async def startup():
     await connect_db()
     print("✅ MongoDB connected")
+    asyncio.create_task(followup_worker())
+    print("✅ Follow-up background worker started (24x7)")
 
 
 @app.on_event("shutdown")
