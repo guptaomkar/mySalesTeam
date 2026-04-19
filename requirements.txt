@@ -12,5 +12,4 @@ motor
 python-multipart
 websockets
 beautifulsoup4
-bson
 a2wsgi
