@@ -1,0 +1,42 @@
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment configurations
+*.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Logs
+*.log
+app.log
+
+# Distribution / Build
+dist/
+build/
+*.egg-info/
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# MilesWeb deployment to ignore
+passenger_wsgi.py
+app.zip
+
+# Jupyter
+.ipynb_checkpoints
+
+# VS Code / IDE
+.vscode/
+.idea/
